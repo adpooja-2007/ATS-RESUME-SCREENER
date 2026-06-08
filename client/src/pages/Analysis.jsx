@@ -5,6 +5,7 @@ import {
   FileText, Briefcase, Award, CheckCircle, AlertTriangle, 
   HelpCircle, BookOpen, PenTool, Download, RefreshCw, Layers, Sparkles
 } from 'lucide-react';
+import { API_ROUTES } from '../services/apiConfig';
 
 const Analysis = () => {
   const location = useLocation();
@@ -36,7 +37,7 @@ const Analysis = () => {
   useEffect(() => {
     const fetchResumes = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/resumes', {
+        const response = await fetch(API_ROUTES.resumes.list, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -66,7 +67,7 @@ const Analysis = () => {
     setReport(null);
 
     try {
-      const response = await fetch('http://localhost:5000/api/ats/analyze', {
+      const response = await fetch(API_ROUTES.ats.analyze, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +104,7 @@ const Analysis = () => {
     setRewriterLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/ai/rewrite', {
+      const response = await fetch(API_ROUTES.ai.rewrite, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,7 +128,7 @@ const Analysis = () => {
 
   const downloadReport = (format) => {
     if (!report) return;
-    const url = `http://localhost:5000/api/reports/${report._id}/${format}`;
+    const url = format === 'pdf' ? API_ROUTES.reports.pdf(report._id) : API_ROUTES.reports.docx(report._id);
     
     fetch(url, {
       headers: { 'Authorization': `Bearer ${token}` }

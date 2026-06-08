@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FileText, Briefcase, TrendingUp, ChevronRight, FileUp, Award } from 'lucide-react';
 import { Line } from 'react-chartjs-2';
+import { API_ROUTES } from '../services/apiConfig';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -36,7 +37,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/ats/reports', {
+        const response = await fetch(API_ROUTES.ats.reports, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -66,7 +67,7 @@ const Dashboard = () => {
 
     const fetchHistory = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/ats/history/${selectedJobId}`, {
+        const response = await fetch(API_ROUTES.ats.history(selectedJobId), {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {

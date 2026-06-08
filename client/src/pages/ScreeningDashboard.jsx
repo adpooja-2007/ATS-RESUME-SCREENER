@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FileText, ArrowLeft, Check, AlertTriangle, AlertOctagon, TrendingUp, Info } from 'lucide-react';
 import { Radar } from 'react-chartjs-2';
+import { API_ROUTES } from '../services/apiConfig';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -42,7 +43,7 @@ const ScreeningDashboard = () => {
 
     const fetchReport = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/ats/screenings/${reportId}`, {
+        const response = await fetch(API_ROUTES.ats.screeningDetail(reportId), {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();

@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Upload, AlertCircle, CheckCircle, FileText, Briefcase, ChevronRight, RefreshCw } from 'lucide-react';
+import { API_ROUTES } from '../services/apiConfig';
 
 const ResumeUpload = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -80,7 +81,7 @@ const ResumeUpload = () => {
 
     try {
       setStatus('parsing');
-      const response = await fetch('http://localhost:5000/api/resumes/upload', {
+      const response = await fetch(API_ROUTES.resumes.upload, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -108,7 +109,7 @@ const ResumeUpload = () => {
     setStatus('screening');
 
     try {
-      const response = await fetch('http://localhost:5000/api/ats/screen', {
+      const response = await fetch(API_ROUTES.ats.screen, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { History as HistoryIcon, Download, ChevronRight, FileText } from 'lucide-react';
+import { API_ROUTES } from '../services/apiConfig';
 
 const History = () => {
   const [reports, setReports] = useState([]);
@@ -13,7 +14,7 @@ const History = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/ats/reports', {
+        const response = await fetch(API_ROUTES.ats.reports, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -31,7 +32,7 @@ const History = () => {
   }, [token]);
 
   const downloadReport = (reportId, format) => {
-    const url = `http://localhost:5000/api/reports/${reportId}/${format}`;
+    const url = format === 'pdf' ? API_ROUTES.reports.pdf(reportId) : API_ROUTES.reports.docx(reportId);
     fetch(url, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
