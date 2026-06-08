@@ -51,6 +51,14 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date() });
 });
 
+// Root Route Handler for Render Health Check
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: "ATS Resume Screener API Running"
+  });
+});
+
 // 404 Route handler
 app.use((req, res, next) => {
   res.status(404);
